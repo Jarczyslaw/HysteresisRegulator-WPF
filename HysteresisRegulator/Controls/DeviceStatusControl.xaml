@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="HysteresisRegulator.Controls.DeviceStatusControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="HysteresisRegulator.Controls"
+             xmlns:conv="clr-namespace:HysteresisRegulator.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" 
+             d:DesignWidth="300">
+    <UserControl.Resources>
+        <conv:BoolToStringConverter x:Key="BoolToOnOff" TrueValue="ON" FalseValue="OFF" />
+        <conv:BoolToBrushConverter x:Key="BoolToStateColor" TrueValue="GreenYellow" FalseValue="OrangeRed" />
+    </UserControl.Resources>
+
+    <GroupBox Header="Device status" Style="{StaticResource boldGroupBox}">
+        <Grid>
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="Margin" Value="0 5 5 0" />
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="IsReadOnly" Value="True" />
+                    <Setter Property="IsReadOnlyCaretVisible" Value="False" />
+                    <Setter Property="Margin" Value="0 5 0 0" />
+                    <Setter Property="Cursor" Value="Arrow" />
+                    <Setter Property="Background" Value="#FFEAEAEA" />
+                </Style>
+            </Grid.Resources>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- RELAY STATE -->
+            <TextBlock 
+                Text="Relay state:" />
+            <TextBox Grid.Column="1" 
+                IsReadOnly="True" />
+
+            <!-- TIME -->
+            <TextBlock Grid.Row="1" 
+                Text="Time:" />
+            <TextBox Grid.Row="1" Grid.Column="1" 
+                IsReadOnly="True" />
+
+            <!-- TEMPERATURE -->
+            <TextBlock Grid.Row="2" 
+                Text="Temperature:" />
+            <TextBox Grid.Row="2"  Grid.Column="1" 
+                IsReadOnly="True" />
+
+            <!-- MEASURE TIME -->
+            <TextBlock Grid.Row="3"
+                Text="Measure time:" />
+            <TextBox Grid.Row="3"  Grid.Column="1" 
+                IsReadOnly="True" />
+
+            <!-- RESOLUTION -->
+            <TextBlock Grid.Row="4" 
+                Text="Resolution:" />
+            <TextBox Grid.Row="4"  Grid.Column="1" 
+                IsReadOnly="True" />
+
+            <!-- SETPOINT -->
+            <TextBlock Grid.Row="5"
+                Text="Set point:" />
+            <TextBox Grid.Row="5"  Grid.Column="1" 
+                IsReadOnly="True" />
+
+            <!-- INPUT ON -->
+            <TextBlock Grid.Row="6" 
+                Text="Input ON:" />
+            <TextBox Grid.Row="6"  Grid.Column="1" 
+                IsReadOnly="True" />
+
+            <!-- INPUT OFF -->
+            <TextBlock Grid.Row="7"
+                Text="Input OFF:" />
+            <TextBox Grid.Row="7"  Grid.Column="1" 
+                IsReadOnly="True" />
+        </Grid>
+    </GroupBox>
+</UserControl>

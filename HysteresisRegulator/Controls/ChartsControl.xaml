@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="HysteresisRegulator.Controls.ChartsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HysteresisRegulator.Controls"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <GroupBox Header="Control values charts" Style="{StaticResource boldGroupBox}">
+        <Grid>
+            <Grid.Resources>
+                <Style TargetType="lvc:CartesianChart">
+                    <Setter Property="Hoverable" Value="False" />
+                    <Setter Property="DataTooltip" Value="{x:Null}" />
+                    <Setter Property="DisableAnimations" Value="True" />
+                </Style>
+                <Style TargetType="lvc:LineSeries">
+                    <Setter Property="Fill" Value="Transparent" />
+                </Style>
+                <Style TargetType="lvc:Separator">
+                    <Setter Property="StrokeThickness" Value="1" />
+                    <Setter Property="Stroke" Value="Black" />
+                </Style>
+                <Style TargetType="lvc:Axis">
+                    <Setter Property="FontSize" Value="14" />
+                    <Setter Property="Foreground" Value="Black" />
+                </Style>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- CHARTS SETTINGS -->
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Time horizon:" VerticalAlignment="Center" Margin="0 0 5 0"/>
+                <xctk:IntegerUpDown Value="{Binding TimeHorizon}"
+                    Width="60" Minimum="10" Maximum="180" Margin="0 0 5 0" />
+                <TextBlock Text="s" VerticalAlignment="Center" Margin="0 0 5 0"/>
+            </StackPanel>
+            
+            <!-- OUTPUT AND SETPOINT CHART -->
+            <lvc:CartesianChart Grid.Row="1" LegendLocation="Top" Margin="5" DataContext="{Binding Charts}">
+                <lvc:CartesianChart.Series>
+                    <lvc:LineSeries Values="{Binding OutputValues}" Configuration="{Binding TimeMapper}"
+                                Stroke="Green" Title="Output" DataLabels="True" LabelPoint="{Binding LabelFormatter}" />
+
+                    <lvc:LineSeries Values="{Binding SetpointValues}" Configuration="{Binding TimeMapper}"
+                                Stroke="Red" Title="Setpoint" />
+                </lvc:CartesianChart.Series>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis LabelFormatter="{Binding TimeFormatter}" Title="Time">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator Step="5"/>
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Temperature [℃]" Foreground="Black">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator />
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
+
+            <!-- RELAY CHART -->
+            <lvc:CartesianChart Grid.Row="2" DataContext="{Binding Charts}" Margin="5">
+                <lvc:CartesianChart.Series>
+                    <lvc:StepLineSeries Values="{Binding RelayValues}" Configuration="{Binding TimeMapper}" />
+                </lvc:CartesianChart.Series>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis LabelFormatter="{Binding TimeFormatter}" Title="Time">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator Step="5" />
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis LabelFormatter="{Binding ControlFormatter}" Title="Relay state" MaxValue="1" MinValue="0">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator Step="1" />
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
+        </Grid>
+    </GroupBox>
+</UserControl>
