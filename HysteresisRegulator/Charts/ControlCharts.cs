@@ -20,7 +20,8 @@ namespace HysteresisRegulator.Charts
         public Func<double, string> ControlFormatter { get; private set; }
         public Func<ChartPoint, string> LabelFormatter { get; private set; }
 
-        public TimeSpan timeHorizon { get; set; } = TimeSpan.FromSeconds(25);
+        public TimeSpan TimeHorizon { get; set; } = TimeSpan.FromSeconds(25);
+        public bool ShowValues { get; set; } = true;
 
         private long ticksPerSecond = TimeSpan.FromSeconds(1).Ticks;
 
@@ -36,8 +37,10 @@ namespace HysteresisRegulator.Charts
             ControlFormatter = d => (d > 0.5d) ? "ON" : "OFF";
             LabelFormatter = p =>
             {
+                if (!ShowValues)
+                    return string.Empty;
                 if (p == null)
-                    return "";
+                    return string.Empty;
                 return p.Y.ToString("0.0");
             };
             TimeFormatter = d => new DateTime((long)d * ticksPerSecond).ToString("HH:mm:ss");
@@ -54,7 +57,7 @@ namespace HysteresisRegulator.Charts
 
         private void PushToChart(ChartValues<DateSample> values, DateSample sample)
         {
-            var outdated = values.Where(v => DateTime.Now - v.TimeStamp > timeHorizon);
+            var outdated = values.Where(v => DateTime.Now - v.TimeStamp > TimeHorizon);
             foreach (var value in outdated)
                 values.Remove(value);
             values.Add(sample);

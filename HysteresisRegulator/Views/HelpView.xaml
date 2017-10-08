@@ -1,0 +1,73 @@
+﻿<Window x:Class="HysteresisRegulator.Views.HelpView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HysteresisRegulator.Views"
+        mc:Ignorable="d"
+        Title="Hysteresis Regulator - Help" 
+        Icon="/Resources/Icons/jt_icon.png"
+        ResizeMode="NoResize"
+        Width="300"
+        Height="180"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <RichTextBox BorderThickness="0" Margin="5"
+                     IsReadOnly="True" IsDocumentEnabled="True">
+            <FlowDocument>
+                <Paragraph>
+                    Used libraries:
+                </Paragraph>
+                <List MarkerStyle="Disc">
+                    <ListItem>
+                        <Paragraph>
+                            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate"
+                                NavigateUri="http://www.mvvmlight.net/">MVVMLight</Hyperlink>
+                        </Paragraph>
+                    </ListItem>
+                    <ListItem>
+                        <Paragraph>
+                            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate"
+                                NavigateUri="https://github.com/xceedsoftware/wpftoolkit">Extended WPF Toolkit</Hyperlink>
+                        </Paragraph>
+                    </ListItem>
+                    <ListItem>
+                        <Paragraph>
+                            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate"
+                                NavigateUri="https://lvcharts.net/">LiveCharts</Hyperlink>
+                        </Paragraph>
+                    </ListItem>
+                    <ListItem>
+                        <Paragraph>
+                            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" 
+                                NavigateUri="https://github.com/NModbus4/NModbus4">NModbus4</Hyperlink>
+                        </Paragraph>
+                    </ListItem>
+                </List>
+                <Paragraph>
+                    Icons from:
+                    <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" 
+                        NavigateUri="https://iconmonstr.com/">
+                        IconMonstr.com
+                    </Hyperlink>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+
+        <Grid Grid.Row="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="btnClose" Click="btnClose_Click" Grid.Column="1" 
+                    Margin="0 0 10 10" Content="Close" />
+        </Grid>
+        
+    </Grid>
+</Window>

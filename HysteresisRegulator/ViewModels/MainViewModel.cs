@@ -7,12 +7,21 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace HysteresisRegulator.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        public ChartsViewModel ChartsVM { get; private set; }
+        public ConnectionViewModel ConnectionVM { get; private set; }
+        public DeviceStatusViewModel DeviceStatusVM { get; private set; }
+        public SettingsViewModel SettingsVM { get; private set; }
+
+        private Communication communication;
+        private AppSettings appSettings;
+
         public MainViewModel()
         {
             appSettings = new AppSettings();
@@ -23,22 +32,14 @@ namespace HysteresisRegulator.ViewModels
             DeviceStatusVM = new DeviceStatusViewModel();
             SettingsVM = new SettingsViewModel(appSettings);
 
-            ShowHelpCommand = new RelayCommand(ShowHelp);
+            CloseCommand = new RelayCommand(Close);
         }
 
-        private void ShowHelp()
+        private void Close()
         {
-            
+            App.Current.Shutdown();
         }
 
-        public ChartsViewModel ChartsVM { get; private set; }
-        public ConnectionViewModel ConnectionVM { get; private set; }
-        public DeviceStatusViewModel DeviceStatusVM { get; private set; }
-        public SettingsViewModel SettingsVM { get; private set; }
-
-        private Communication communication;
-        private AppSettings appSettings;
-
-        public RelayCommand ShowHelpCommand { get; private set; }
+        public RelayCommand CloseCommand { get; private set; }
     }
 }

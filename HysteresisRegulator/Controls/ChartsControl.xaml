@@ -41,6 +41,8 @@
                 <xctk:IntegerUpDown Value="{Binding TimeHorizon}"
                     Width="60" Minimum="10" Maximum="180" Margin="0 0 5 0" />
                 <TextBlock Text="s" VerticalAlignment="Center" Margin="0 0 5 0"/>
+                <CheckBox IsChecked="{Binding ShowValues}" 
+                          Content="Show values" VerticalAlignment="Center" Margin="5 0 0 0" />
             </StackPanel>
             
             <!-- OUTPUT AND SETPOINT CHART -->

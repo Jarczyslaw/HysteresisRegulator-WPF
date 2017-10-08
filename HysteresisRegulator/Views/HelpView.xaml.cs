@@ -1,6 +1,6 @@
-﻿using HysteresisRegulator.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,25 +16,24 @@ using System.Windows.Shapes;
 namespace HysteresisRegulator.Views
 {
     /// <summary>
-    /// Interaction logic for MainView.xaml
+    /// Interaction logic for HelpView.xaml
     /// </summary>
-    public partial class MainView : Window
+    public partial class HelpView : Window
     {
-        public MainView()
+        public HelpView()
         {
             InitializeComponent();
         }
 
-        private void btnShowHelp_Click(object sender, RoutedEventArgs e)
+        private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            var help = new HelpView();
-            help.Show();
+            Close();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
-            var mvm = DataContext as MainViewModel;
-            mvm.CloseCommand.Execute(null);
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
         }
     }
 }

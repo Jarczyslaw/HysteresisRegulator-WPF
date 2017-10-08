@@ -14,6 +14,8 @@ namespace HysteresisRegulator.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
+        private AppSettings appSettings;
+
         public SettingsViewModel(AppSettings appSettings)
         {
             this.appSettings = appSettings;
@@ -31,8 +33,6 @@ namespace HysteresisRegulator.ViewModels
             Debug.WriteLine("Change parameters");
             Debug.WriteLine(string.Format("Setpoint: {0}, input on: {1}, input off: {2}, resolution: {3}", SetSetpoint, SetInputOn, SetInputOff, SetResolution));
         }
-
-        private AppSettings appSettings;
 
         public bool setSetpoint = false;
         public bool SetSetpoint

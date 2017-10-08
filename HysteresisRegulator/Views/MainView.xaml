@@ -12,7 +12,8 @@
         MinHeight="{StaticResource WindowHeight}"
         MinWidth="{StaticResource WindowWidth}"
         Icon="/Resources/Icons/jt_icon.png"
-        Title="Hysteresis Regulator">
+        Title="Hysteresis Regulator"
+        Closing="Window_Closing">
     <Window.DataContext>
         <vm:MainViewModel />
     </Window.DataContext>
@@ -47,7 +48,7 @@
             <Separator Grid.Column="5" />
             <!-- HELP -->
             <StatusBarItem Grid.Column="6">
-                <Button Command="{Binding ShowHelpCommand}"
+                <Button x:Name="btnShowHelp" Click="btnShowHelp_Click"
                     Width="20">
                     <Image Source="/Resources/Icons/help.png" />
                 </Button>

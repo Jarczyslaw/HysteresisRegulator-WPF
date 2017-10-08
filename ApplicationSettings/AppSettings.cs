@@ -48,6 +48,12 @@ namespace ApplicationSettings
             set { settings.TimeHorizon = value; }
         }
 
+        public bool ShowValues
+        {
+            get { return settings.ShowValues; }
+            set { settings.ShowValues = value; }
+        }
+
         public AppSettings()
         {
             settings = Settings.Default;

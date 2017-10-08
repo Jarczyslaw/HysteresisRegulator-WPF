@@ -94,5 +94,17 @@ namespace ApplicationSettings {
                 this["TimeHorizon"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowValues {
+            get {
+                return ((bool)(this["ShowValues"]));
+            }
+            set {
+                this["ShowValues"] = value;
+            }
+        }
     }
 }

@@ -13,19 +13,6 @@ namespace HysteresisRegulator.ViewModels
     {
         public ControlCharts Charts { get; private set; }
 
-        private int timeHorizon;
-        public int TimeHorizon
-        {
-            get { return timeHorizon; }
-            set
-            {
-                Charts.timeHorizon = TimeSpan.FromSeconds(value);
-                Set(() => TimeHorizon, ref timeHorizon, value);
-                appSettings.TimeHorizon = value;
-            }
-        }
-
-
         private double dummySetpoint = 20d;
         private double dummyOutput = 0d;
         private bool dummyRelayState = false;
@@ -37,6 +24,7 @@ namespace HysteresisRegulator.ViewModels
             Charts = new ControlCharts();
             this.appSettings = appSettings;
             TimeHorizon = appSettings.TimeHorizon;
+            ShowValues = appSettings.ShowValues;
             AddDummyData();
         }
 
@@ -52,6 +40,30 @@ namespace HysteresisRegulator.ViewModels
                     dummyOutput++;
                 }
             });
+        }
+
+        private int timeHorizon;
+        public int TimeHorizon
+        {
+            get { return timeHorizon; }
+            set
+            {
+                Charts.TimeHorizon = TimeSpan.FromSeconds(value);
+                Set(() => TimeHorizon, ref timeHorizon, value);
+                appSettings.TimeHorizon = value;
+            }
+        }
+
+        private bool showValues;
+        public bool ShowValues
+        {
+            get { return showValues; }
+            set
+            {
+                Charts.ShowValues = value;
+                Set(() => ShowValues, ref showValues, value);
+                appSettings.ShowValues = value;
+            }
         }
     }
 }
