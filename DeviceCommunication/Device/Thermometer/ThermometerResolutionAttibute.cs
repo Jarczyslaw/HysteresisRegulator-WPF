@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DeviceCommunication.Device.Thermometer
 {
-    public class ResolutionAttibute : Attribute
+    public class ThermometerResolutionAttibute : Attribute
     {
         public float Accuracy { get; set; }
         public int Latency { get; set; }

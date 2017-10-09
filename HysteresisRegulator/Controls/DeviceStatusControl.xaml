@@ -11,6 +11,7 @@
     <UserControl.Resources>
         <conv:BoolToStringConverter x:Key="BoolToOnOff" TrueValue="ON" FalseValue="OFF" />
         <conv:BoolToBrushConverter x:Key="BoolToStateColor" TrueValue="GreenYellow" FalseValue="OrangeRed" />
+        <conv:MillisToTimeSpanConverter x:Key="MillisToTimeSpan" />
     </UserControl.Resources>
 
     <GroupBox Header="Device status" Style="{StaticResource boldGroupBox}">
@@ -25,7 +26,8 @@
                     <Setter Property="IsReadOnlyCaretVisible" Value="False" />
                     <Setter Property="Margin" Value="0 5 0 0" />
                     <Setter Property="Cursor" Value="Arrow" />
-                    <Setter Property="Background" Value="#FFEAEAEA" />
+                    <Setter Property="Background" Value="White" />
+                    <Setter Property="TextAlignment" Value="Right" />
                 </Style>
             </Grid.Resources>
 
@@ -42,55 +44,60 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <!-- RELAY STATE -->
             <TextBlock 
                 Text="Relay state:" />
-            <TextBox Grid.Column="1" 
-                IsReadOnly="True" />
+            <TextBox Grid.Column="1" Text="{Binding Status.RelayState, Converter={StaticResource BoolToOnOff}}"
+                Background="{Binding Status.RelayState, Converter={StaticResource BoolToStateColor}}" IsReadOnly="True" />
 
             <!-- TIME -->
             <TextBlock Grid.Row="1" 
                 Text="Time:" />
-            <TextBox Grid.Row="1" Grid.Column="1" 
-                IsReadOnly="True" />
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Status.Time, Converter={StaticResource MillisToTimeSpan}}"
+                 IsReadOnly="True" />
 
             <!-- TEMPERATURE -->
             <TextBlock Grid.Row="2" 
                 Text="Temperature:" />
-            <TextBox Grid.Row="2"  Grid.Column="1" 
+            <TextBox Grid.Row="2"  Grid.Column="1" Text="{Binding Status.Temperature, StringFormat={}{0:0.000}°C}" 
                 IsReadOnly="True" />
 
             <!-- MEASURE TIME -->
             <TextBlock Grid.Row="3"
                 Text="Measure time:" />
-            <TextBox Grid.Row="3"  Grid.Column="1" 
+            <TextBox Grid.Row="3"  Grid.Column="1" Text="{Binding Status.MeasureTime, StringFormat={}{0}ms}" 
                 IsReadOnly="True" />
 
             <!-- RESOLUTION -->
             <TextBlock Grid.Row="4" 
                 Text="Resolution:" />
-            <TextBox Grid.Row="4"  Grid.Column="1" 
+            <TextBox Grid.Row="4"  Grid.Column="1" Text="{Binding Status.Resolution}" 
                 IsReadOnly="True" />
 
             <!-- SETPOINT -->
             <TextBlock Grid.Row="5"
                 Text="Set point:" />
-            <TextBox Grid.Row="5"  Grid.Column="1" 
+            <TextBox Grid.Row="5"  Grid.Column="1" Text="{Binding Status.Setpoint, StringFormat={}{0:0.0}°C}" 
                 IsReadOnly="True" />
 
             <!-- INPUT ON -->
             <TextBlock Grid.Row="6" 
                 Text="Input ON:" />
-            <TextBox Grid.Row="6"  Grid.Column="1" 
+            <TextBox Grid.Row="6"  Grid.Column="1" Text="{Binding Status.InputOn, StringFormat={}{0:0.0}°C}" 
                 IsReadOnly="True" />
 
             <!-- INPUT OFF -->
             <TextBlock Grid.Row="7"
                 Text="Input OFF:" />
-            <TextBox Grid.Row="7"  Grid.Column="1" 
+            <TextBox Grid.Row="7"  Grid.Column="1" Text="{Binding Status.InputOff, StringFormat={}{0:0.0}°C}" 
                 IsReadOnly="True" />
+            
+            <!-- REFRESH -->
+            <Button Grid.Row="8" Grid.ColumnSpan="2"  Command="{Binding RefreshCommand}"
+                Margin="0 5 0 0" Content="Refresh" />
         </Grid>
     </GroupBox>
 </UserControl>

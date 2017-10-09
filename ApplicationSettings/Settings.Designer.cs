@@ -73,18 +73,6 @@ namespace ApplicationSettings {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Resolution12Bit")]
-        public global::DeviceCommunication.Device.Thermometer.Resolution Resolution {
-            get {
-                return ((global::DeviceCommunication.Device.Thermometer.Resolution)(this["Resolution"]));
-            }
-            set {
-                this["Resolution"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("20")]
         public int TimeHorizon {
             get {
@@ -104,6 +92,18 @@ namespace ApplicationSettings {
             }
             set {
                 this["ShowValues"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Resolution12Bit")]
+        public global::DeviceCommunication.Device.Thermometer.ThermometerResolution ThermometerResolution {
+            get {
+                return ((global::DeviceCommunication.Device.Thermometer.ThermometerResolution)(this["ThermometerResolution"]));
+            }
+            set {
+                this["ThermometerResolution"] = value;
             }
         }
     }

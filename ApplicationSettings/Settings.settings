@@ -14,14 +14,14 @@
     <Setting Name="InputOff" Type="System.Double" Scope="User">
       <Value Profile="(Default)">-2</Value>
     </Setting>
-    <Setting Name="Resolution" Type="DeviceCommunication.Device.Thermometer.Resolution" Scope="User">
-      <Value Profile="(Default)">Resolution12Bit</Value>
-    </Setting>
     <Setting Name="TimeHorizon" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">20</Value>
     </Setting>
     <Setting Name="ShowValues" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ThermometerResolution" Type="DeviceCommunication.Device.Thermometer.ThermometerResolution" Scope="User">
+      <Value Profile="(Default)">Resolution12Bit</Value>
     </Setting>
   </Settings>
 </SettingsFile>

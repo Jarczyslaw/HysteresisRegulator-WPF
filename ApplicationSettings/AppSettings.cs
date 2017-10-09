@@ -36,10 +36,10 @@ namespace ApplicationSettings
             set { settings.InputOff = value; }
         }
 
-        public Resolution Resolution
+        public ThermometerResolution ThermometerResolution
         {
-            get { return settings.Resolution; }
-            set { settings.Resolution = value; }
+            get { return settings.ThermometerResolution; }
+            set { settings.ThermometerResolution = value; }
         }
 
         public int TimeHorizon

@@ -34,6 +34,7 @@ namespace HysteresisRegulator.ViewModels
         private void Connect()
         {
             Debug.WriteLine("Connect to: " + SelectedPort);
+            communication.Start(SelectedPort);
         }
 
         public RelayCommand ConnectCommand { get; private set; }

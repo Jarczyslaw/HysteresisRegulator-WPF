@@ -59,7 +59,7 @@
                       Margin="{StaticResource defaultTopMargin}" />
             <TextBlock Grid.Row="4" Grid.ColumnSpan="2" Text="{Binding ResolutionDescription}" TextAlignment="Right" />
 
-            <Button Grid.Row="5" Grid.ColumnSpan="2" Command="{Binding ChangeParametersCommand}" 
+            <Button Grid.Row="5" Grid.ColumnSpan="2" Command="{Binding SetParametersCommand}" 
                     Content="Change parameters" Height="30" Margin="{StaticResource defaultTopMargin}" />
         </Grid>
     </GroupBox>
