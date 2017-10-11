@@ -36,7 +36,8 @@ namespace HysteresisRegulator.ViewModels
 
         private void SetParameters()
         {
-            communication.Writer.SetParameters(input);
+            if (input.SetValuesPending())
+                communication.Writer.SetParameters(input);
         }
 
         private DeviceInput input;

@@ -23,5 +23,11 @@
     <Setting Name="ThermometerResolution" Type="DeviceCommunication.Device.Thermometer.ThermometerResolution" Scope="User">
       <Value Profile="(Default)">Resolution12Bit</Value>
     </Setting>
+    <Setting Name="PoolingInterval" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="SerialPort" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

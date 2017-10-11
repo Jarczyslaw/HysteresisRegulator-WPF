@@ -1,4 +1,6 @@
 ﻿using ApplicationSettings;
+using DeviceCommunication;
+using DeviceCommunication.Device;
 using GalaSoft.MvvmLight;
 using HysteresisRegulator.Charts;
 using System;
@@ -18,28 +20,18 @@ namespace HysteresisRegulator.ViewModels
         private bool dummyRelayState = false;
 
         private AppSettings appSettings;
+        private Communication communication;
 
-        public ChartsViewModel(AppSettings appSettings)
+        public ChartsViewModel(AppSettings appSettings, Communication communication)
         {
             Charts = new ControlCharts();
             this.appSettings = appSettings;
+            this.communication = communication;
+
             TimeHorizon = appSettings.TimeHorizon;
             ShowValues = appSettings.ShowValues;
-            AddDummyData();
-        }
 
-        private void AddDummyData()
-        {
-            Task.Run(async () =>
-            {
-                while(true)
-                {
-                    await Task.Delay(1000);
-                    Charts.Push(dummyOutput, dummySetpoint, dummyRelayState);
-                    dummyRelayState = !dummyRelayState;
-                    dummyOutput++;
-                }
-            });
+            communication.Pooling.UpdateStatus += (s) => Charts.Push(s.Temperature, s.Setpoint, s.RelayState);
         }
 
         private int timeHorizon;

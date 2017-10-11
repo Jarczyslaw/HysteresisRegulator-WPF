@@ -18,6 +18,12 @@
                 </Style>
                 <Style TargetType="lvc:LineSeries">
                     <Setter Property="Fill" Value="Transparent" />
+                    <Setter Property="PointGeometrySize" Value="0" />
+                    <Setter Property="LineSmoothness" Value="0" />
+                </Style>
+                <Style TargetType="lvc:StepLineSeries">
+                    <Setter Property="Fill" Value="Transparent" />
+                    <Setter Property="PointGeometrySize" Value="0" />
                 </Style>
                 <Style TargetType="lvc:Separator">
                     <Setter Property="StrokeThickness" Value="1" />

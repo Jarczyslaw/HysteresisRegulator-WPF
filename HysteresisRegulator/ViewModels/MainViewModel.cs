@@ -27,8 +27,8 @@ namespace HysteresisRegulator.ViewModels
             appSettings = new AppSettings();
             communication = new Communication();
 
-            ChartsVM = new ChartsViewModel(appSettings);
-            ConnectionVM = new ConnectionViewModel(communication);
+            ChartsVM = new ChartsViewModel(appSettings, communication);
+            ConnectionVM = new ConnectionViewModel(appSettings, communication);
             DeviceStatusVM = new DeviceStatusViewModel(communication);
             SettingsVM = new SettingsViewModel(appSettings, communication);
 

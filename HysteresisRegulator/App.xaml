@@ -9,7 +9,7 @@
              StartupUri="/Views/MainView.xaml">
     <Application.Resources>
         
-        <core:Double x:Key="WindowHeight">600</core:Double>
+        <core:Double x:Key="WindowHeight">700</core:Double>
         <core:Double x:Key="WindowWidth">1000</core:Double>
 
         <Thickness x:Key="defaultTopMargin" Left="0" Top="5" Right="0" Bottom="0" />

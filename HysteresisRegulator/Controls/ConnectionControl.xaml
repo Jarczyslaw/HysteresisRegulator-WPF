@@ -4,23 +4,35 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HysteresisRegulator.Controls"
+             xmlns:conv="clr-namespace:HysteresisRegulator.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <conv:BoolToStringConverter x:Key="BoolToConnected" TrueValue="Disconnect" FalseValue="Connect" />
+    </UserControl.Resources>
     <GroupBox Header="Connection" Style="{StaticResource boldGroupBox}">
         <Grid>
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                </Style>
+            </Grid.Resources>
+            
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="90" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <!-- PORTS -->
             <TextBlock Text="Serial port:" 
-                       Margin="{StaticResource defaultTopMargin}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                       Margin="{StaticResource defaultTopMargin}" />
             <ComboBox Grid.Column="1" ItemsSource="{Binding Ports}" SelectedItem="{Binding SelectedPort}"
                       Margin="{StaticResource defaultTopMargin}" />
             <Button Grid.Column="2" Command="{Binding RefreshPortsCommand}"
@@ -30,7 +42,17 @@
 
             <!-- CONNECTION BUTTON -->
             <Button Grid.Row="1" Grid.ColumnSpan="3" Command="{Binding ConnectCommand}"
-                    Content="{Binding Test}" Margin="{StaticResource defaultTopMargin}" Height="30" />
+                    Content="{Binding Connected, Converter={StaticResource BoolToConnected}}" Margin="{StaticResource defaultTopMargin}" Height="30" />
+        
+            <!-- DEVICE POOLING -->
+            <TextBlock Grid.Row="2"
+                Margin="{StaticResource defaultTopMargin}" Text="Pooling interval:" />
+            <ComboBox Grid.Row="2" Grid.Column="1"
+                      ItemsSource="{Binding PoolingIntervals}" SelectedItem="{Binding SelectedInterval}"
+                      Margin="{StaticResource defaultTopMargin}" />
+            <TextBlock Grid.Row="2" Grid.Column="2"
+                       Text="ms" />
+
         </Grid>
     </GroupBox>
 </UserControl>

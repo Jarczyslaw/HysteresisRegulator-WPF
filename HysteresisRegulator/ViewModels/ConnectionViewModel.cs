@@ -1,4 +1,5 @@
-﻿using DeviceCommunication;
+﻿using ApplicationSettings;
+using DeviceCommunication;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
@@ -13,17 +14,18 @@ namespace HysteresisRegulator.ViewModels
     public class ConnectionViewModel : ViewModelBase
     {
         private Communication communication;
+        private AppSettings settings;
 
-        public ConnectionViewModel(Communication communication)
+        public ConnectionViewModel(AppSettings settings, Communication communication)
         {
             this.communication = communication;
+            this.settings = settings;
 
             ConnectCommand = new RelayCommand(Connect);
             RefreshPortsCommand = new RelayCommand(RefreshPorts);
             RefreshPorts();
-            SelectedPort = Ports.First();
-
-            Test = "ASD";
+            SelectedPort = settings.SerialPort;
+            SelectedInterval = settings.PoolingInterval;
         }
 
         private void RefreshPorts()
@@ -37,14 +39,11 @@ namespace HysteresisRegulator.ViewModels
             communication.Start(SelectedPort);
         }
 
-        public RelayCommand ConnectCommand { get; private set; }
-        public RelayCommand RefreshPortsCommand { get; private set; }
-
-        private string test;
-        public string Test
+        private string connected;
+        public string Connected
         {
-            get { return test; }
-            set { Set(() => Test, ref test, value); }
+            get { return connected; }
+            set { Set(() => Connected, ref connected, value); }
         }
 
         private string[] ports;
@@ -58,7 +57,35 @@ namespace HysteresisRegulator.ViewModels
         public string SelectedPort
         {
             get { return selectedPort; }
-            set { Set(() => SelectedPort, ref selectedPort, value); }
+            set
+            {
+                string newPort = value;
+                if (!Ports.Contains(newPort))
+                    newPort = Ports.FirstOrDefault();
+                else
+                    settings.SerialPort = newPort;
+                Set(() => SelectedPort, ref selectedPort, newPort);
+            }
         }
+
+        private int selectedInterval;
+        public int SelectedInterval
+        {
+            get { return selectedInterval; }
+            set
+            {
+                Set(() => SelectedInterval, ref selectedInterval, value);
+                communication.Pooling.Interval = value;
+                settings.PoolingInterval = value;
+            }
+        }
+
+        public int[] PoolingIntervals
+        {
+            get { return communication.Pooling.Intervals; }
+        }
+
+        public RelayCommand ConnectCommand { get; private set; }
+        public RelayCommand RefreshPortsCommand { get; private set; }
     }
 }

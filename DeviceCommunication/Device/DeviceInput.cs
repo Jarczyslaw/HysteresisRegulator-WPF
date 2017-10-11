@@ -18,5 +18,10 @@ namespace DeviceCommunication.Device
         public float InputOnValue { get; set; }
         public float InputOffValue { get; set; }
         public ThermometerResolution ResolutionValue { get; set; }
+
+        public bool SetValuesPending()
+        {
+            return SetSetpoint || SetInputOn || SetInputOff || SetResolution;
+        }
     }
 }

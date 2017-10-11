@@ -17,7 +17,7 @@ namespace HysteresisRegulator.ViewModels
         public DeviceStatusViewModel(Communication communication)
         {
             this.communication = communication;
-
+            communication.Pooling.UpdateStatus += (s) => Status = s;
             RefreshCommand = new RelayCommand(Refresh);
         }
 
