@@ -68,13 +68,13 @@ namespace ApplicationSettings
             }
         }
 
-        public bool ShowValues
+        public bool ShowDataLabels
         {
-            get { return settings.ShowValues; }
+            get { return settings.ShowDataLabels; }
             set
             {
-                if (settings.ShowValues != value)
-                    settings.ShowValues = value;
+                if (settings.ShowDataLabels != value)
+                    settings.ShowDataLabels = value;
             }
         }
 
@@ -105,6 +105,7 @@ namespace ApplicationSettings
             {
                 settings.Upgrade();
                 settings.UpgradeRequired = false;
+                settings.Save();
             }
             settings.PropertyChanged += (o, e) => settings.Save();
         }

@@ -11,21 +11,34 @@ using System.Threading.Tasks;
 
 namespace HysteresisRegulator.ViewModels
 {
-    public class ConnectionViewModel : ViewModelBase
+    public class DeviceConnectionViewModel : ViewModelBase
     {
         private Communication communication;
         private AppSettings settings;
 
-        public ConnectionViewModel(AppSettings settings, Communication communication)
+        public DeviceConnectionViewModel(AppSettings settings, Communication communication)
         {
             this.communication = communication;
             this.settings = settings;
+
+            communication.CommunicationStart += Communication_CommunicationStart;
+            communication.CommunicationStop += Communication_CommunicationStop;
 
             ConnectCommand = new RelayCommand(Connect);
             RefreshPortsCommand = new RelayCommand(RefreshPorts);
             RefreshPorts();
             SelectedPort = settings.SerialPort;
             SelectedInterval = settings.PoolingInterval;
+        }
+
+        private void Communication_CommunicationStop()
+        {
+            Connected = false;
+        }
+
+        private void Communication_CommunicationStart()
+        {
+            Connected = true;
         }
 
         private void RefreshPorts()
@@ -36,11 +49,14 @@ namespace HysteresisRegulator.ViewModels
         private void Connect()
         {
             Debug.WriteLine("Connect to: " + SelectedPort);
-            communication.Start(SelectedPort);
+            if (!communication.Connected)
+                communication.Start(SelectedPort);
+            else
+                communication.Stop();
         }
 
-        private string connected;
-        public string Connected
+        private bool connected;
+        public bool Connected
         {
             get { return connected; }
             set { Set(() => Connected, ref connected, value); }

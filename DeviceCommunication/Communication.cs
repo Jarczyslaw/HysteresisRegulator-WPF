@@ -12,11 +12,35 @@ namespace DeviceCommunication
     {
         public delegate void CommunicationStartHandler();
         public event CommunicationStartHandler CommunicationStart;
+        public delegate void CommunicationStopHandler();
+        public event CommunicationStopHandler CommunicationStop;
 
         public DeviceReader Reader { get; private set; }
         public DeviceWriter Writer { get; private set; }
 
         public DevicePolling Pooling { get; private set; }
+
+        public bool Connected
+        {
+            get
+            {
+                if (port == null)
+                    return false;
+                else
+                    return port.IsOpen;
+            }
+        }
+
+        public string PortName
+        {
+            get
+            {
+                if (port == null)
+                    return null;
+                else
+                    return port.PortName;
+            }
+        }
 
         private SerialPort port;
         private IModbusSerialMaster master;
@@ -26,7 +50,7 @@ namespace DeviceCommunication
         {
             SetupSerialPort();
             master = ModbusSerialMaster.CreateRtu(port);
-            SetTimeout(1000);
+            SetTimeout(500);
             Reader = new DeviceReader(master, slaveAddress);
             Writer = new DeviceWriter(master, slaveAddress);
             Pooling = new DevicePolling(Reader);
@@ -40,15 +64,15 @@ namespace DeviceCommunication
             port.Parity = Parity.None;
             port.StopBits = StopBits.One;
             port.RtsEnable = true;
-            port.DtrEnable = true;
+            port.DtrEnable = true; 
         }
 
         public void Start(string portName)
         {
             port.PortName = portName;
             port.Open();
-            Pooling.Start();
             CommunicationStart?.Invoke();
+            Pooling.Start();
         }
 
         public void Stop()

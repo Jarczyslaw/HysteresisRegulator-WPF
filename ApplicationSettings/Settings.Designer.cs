@@ -25,7 +25,7 @@ namespace ApplicationSettings {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool UpgradeRequired {
             get {
                 return ((bool)(this["UpgradeRequired"]));
@@ -86,12 +86,12 @@ namespace ApplicationSettings {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ShowValues {
+        public bool ShowDataLabels {
             get {
-                return ((bool)(this["ShowValues"]));
+                return ((bool)(this["ShowDataLabels"]));
             }
             set {
-                this["ShowValues"] = value;
+                this["ShowDataLabels"] = value;
             }
         }
         

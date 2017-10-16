@@ -9,7 +9,7 @@
         Icon="/Resources/Icons/jt_icon.png"
         ResizeMode="NoResize"
         Width="300"
-        Height="180"
+        Height="200"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
@@ -20,6 +20,11 @@
         <RichTextBox BorderThickness="0" Margin="5"
                      IsReadOnly="True" IsDocumentEnabled="True">
             <FlowDocument>
+                <Paragraph>
+                    See more projects and info on:
+                    <Hyperlink RequestNavigate="Hyperlink_RequestNavigate"
+                                NavigateUri="http://jtjt.pl/">jtjt.pl</Hyperlink>
+                </Paragraph>
                 <Paragraph>
                     Used libraries:
                 </Paragraph>

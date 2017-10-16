@@ -13,6 +13,11 @@ namespace DeviceCommunication
 {
     public class DeviceWriter
     {
+        public delegate void WritesChangedHandler(int writesCount);
+        public event WritesChangedHandler WritesChanged;
+
+        public int WritesCount { get; private set; } = 0;
+
         private IModbusSerialMaster master;
         private byte slaveAddress;
 
@@ -28,6 +33,18 @@ namespace DeviceCommunication
             var regs = GetRegisters(input);
             master.WriteMultipleRegisters(slaveAddress, 0, regs);
             master.WriteMultipleCoils(slaveAddress, 0, coils);
+            RaiseWritesChangedEvent();
+        }
+
+        public async void SetParametersAsync(DeviceInput input)
+        {
+            await Task.Run(() => SetParameters(input));
+        }
+
+        private void RaiseWritesChangedEvent()
+        {
+            WritesCount++;
+            WritesChanged?.Invoke(WritesCount);
         }
 
         private bool[] GetCoils(DeviceInput input)

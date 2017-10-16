@@ -20,10 +20,12 @@
                     <Setter Property="Fill" Value="Transparent" />
                     <Setter Property="PointGeometrySize" Value="0" />
                     <Setter Property="LineSmoothness" Value="0" />
+                    <Setter Property="StrokeThickness" Value="3" />
                 </Style>
                 <Style TargetType="lvc:StepLineSeries">
                     <Setter Property="Fill" Value="Transparent" />
                     <Setter Property="PointGeometrySize" Value="0" />
+                    <Setter Property="StrokeThickness" Value="6" />
                 </Style>
                 <Style TargetType="lvc:Separator">
                     <Setter Property="StrokeThickness" Value="1" />
@@ -44,26 +46,26 @@
             <!-- CHARTS SETTINGS -->
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Time horizon:" VerticalAlignment="Center" Margin="0 0 5 0"/>
-                <xctk:IntegerUpDown Value="{Binding TimeHorizon}"
-                    Width="60" Minimum="10" Maximum="180" Margin="0 0 5 0" />
+                <xctk:IntegerUpDown Value="{Binding Configuration.TimeHorizon}"
+                    Width="60" Minimum="30" Maximum="600" Margin="0 0 5 0" />
                 <TextBlock Text="s" VerticalAlignment="Center" Margin="0 0 5 0"/>
-                <CheckBox IsChecked="{Binding ShowValues}" 
+                <CheckBox IsChecked="{Binding Configuration.ShowDataLabels}" 
                           Content="Show values" VerticalAlignment="Center" Margin="5 0 0 0" />
             </StackPanel>
             
             <!-- OUTPUT AND SETPOINT CHART -->
-            <lvc:CartesianChart Grid.Row="1" LegendLocation="Top" Margin="5" DataContext="{Binding Charts}">
+            <lvc:CartesianChart Grid.Row="1" LegendLocation="Top" Margin="5">
                 <lvc:CartesianChart.Series>
-                    <lvc:LineSeries Values="{Binding OutputValues}" Configuration="{Binding TimeMapper}"
-                                Stroke="Green" Title="Output" DataLabels="True" LabelPoint="{Binding LabelFormatter}" />
+                    <lvc:LineSeries Values="{Binding Charts.OutputValues}" Configuration="{Binding Configuration.DateSampleMapper}"
+                                Stroke="Green" Title="Output" DataLabels="{Binding Configuration.ShowDataLabels}" LabelPoint="{Binding Configuration.LabelPointFormatter}" />
 
-                    <lvc:LineSeries Values="{Binding SetpointValues}" Configuration="{Binding TimeMapper}"
+                    <lvc:LineSeries Values="{Binding Charts.SetpointValues}" Configuration="{Binding Configuration.DateSampleMapper}"
                                 Stroke="Red" Title="Setpoint" />
                 </lvc:CartesianChart.Series>
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis LabelFormatter="{Binding TimeFormatter}" Title="Time">
+                    <lvc:Axis LabelFormatter="{Binding Configuration.TimeAxisFormatter}" Title="Time">
                         <lvc:Axis.Separator>
-                            <lvc:Separator Step="5"/>
+                            <lvc:Separator Step="{Binding Configuration.AxisStep}"/>
                         </lvc:Axis.Separator>
                     </lvc:Axis>
                 </lvc:CartesianChart.AxisX>
@@ -77,19 +79,19 @@
             </lvc:CartesianChart>
 
             <!-- RELAY CHART -->
-            <lvc:CartesianChart Grid.Row="2" DataContext="{Binding Charts}" Margin="5">
+            <lvc:CartesianChart Grid.Row="2" Margin="5">
                 <lvc:CartesianChart.Series>
-                    <lvc:StepLineSeries Values="{Binding RelayValues}" Configuration="{Binding TimeMapper}" />
+                    <lvc:StepLineSeries Values="{Binding Charts.RelayValues}" Configuration="{Binding Configuration.DateSampleMapper}" />
                 </lvc:CartesianChart.Series>
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis LabelFormatter="{Binding TimeFormatter}" Title="Time">
+                    <lvc:Axis LabelFormatter="{Binding Configuration.TimeAxisFormatter}" Title="Time">
                         <lvc:Axis.Separator>
-                            <lvc:Separator Step="5" />
+                            <lvc:Separator Step="{Binding Configuration.AxisStep}" />
                         </lvc:Axis.Separator>
                     </lvc:Axis>
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis LabelFormatter="{Binding ControlFormatter}" Title="Relay state" MaxValue="1" MinValue="0">
+                    <lvc:Axis LabelFormatter="{Binding Configuration.RelayChartFormatter}" Title="Relay state" MaxValue="1" MinValue="0">
                         <lvc:Axis.Separator>
                             <lvc:Separator Step="1" />
                         </lvc:Axis.Separator>

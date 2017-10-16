@@ -13,7 +13,10 @@ namespace DeviceCommunication
 {
     public class DeviceReader
     {
-        public int ReadsCount { get; private set; }
+        public delegate void ReadsChangedHandler(int readsCount);
+        public event ReadsChangedHandler ReadsChanged;
+
+        public int ReadsCount { get; private set; } = 0;
 
         private IModbusSerialMaster master;
         private byte slaveAddress;
@@ -28,7 +31,14 @@ namespace DeviceCommunication
         {
             bool[] contacts = master.ReadInputs(slaveAddress, 0, 1);
             ushort[] registers = master.ReadInputRegisters(slaveAddress, 0, 13);
+            RaiseReadsChangedEvent();
             return ParseStatus(contacts, registers);
+        }
+
+        private void RaiseReadsChangedEvent()
+        {
+            ReadsCount++;
+            ReadsChanged?.Invoke(ReadsCount);
         }
 
         private DeviceStatus ParseStatus(bool[] inputContacts, ushort[] inputRegisters)
@@ -42,7 +52,6 @@ namespace DeviceCommunication
             status.InputOn = ModbusConvert.GetFloat(inputRegisters[InputRegisters.InputOnHi], inputRegisters[InputRegisters.InputOnLo]);
             status.InputOff = ModbusConvert.GetFloat(inputRegisters[InputRegisters.InputOffHi], inputRegisters[InputRegisters.InputOffLo]);
             status.Resolution = (ThermometerResolution)inputRegisters[InputRegisters.Resolution];
-            ReadsCount++;
             return status;
         }
     }

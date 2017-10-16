@@ -18,7 +18,7 @@ namespace DeviceCommunication
         {
             get
             {
-                return new int[] { 500, 1000, 2000, 5000 };
+                return new int[] { 1000, 2000, 5000, 10000 };
             }
         }
 
@@ -44,14 +44,14 @@ namespace DeviceCommunication
                 {
                     var status = reader.GetStatus();
                     UpdateStatus?.Invoke(status);
-                    await Task.Delay(Interval);
+                    await Task.Delay(Interval, token);
                 }
             }, token);
         }
 
         public void Stop()
         {
-
+            
         }
     }
 }

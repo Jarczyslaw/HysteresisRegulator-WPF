@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="UpgradeRequired" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="Setpoint" Type="System.Double" Scope="User">
       <Value Profile="(Default)">30</Value>
@@ -17,7 +17,7 @@
     <Setting Name="TimeHorizon" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">20</Value>
     </Setting>
-    <Setting Name="ShowValues" Type="System.Boolean" Scope="User">
+    <Setting Name="ShowDataLabels" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="ThermometerResolution" Type="DeviceCommunication.Device.Thermometer.ThermometerResolution" Scope="User">

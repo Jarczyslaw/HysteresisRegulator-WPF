@@ -30,26 +30,40 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                     </Grid>
                 </ItemsPanelTemplate>
             </StatusBar.ItemsPanel>
             <!-- CONNECTION STATE -->
             <StatusBarItem Grid.Column="0">
-                <TextBlock Text="asd" />
+                <TextBlock Text="{Binding ConnectedStatus}" />
             </StatusBarItem>
             <Separator Grid.Column="1" />
             <!-- CONNECTION INFO -->
             <StatusBarItem Grid.Column="2">
-                <TextBlock Text="asd" />
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}Reads: {0}, writes: {1}">
+                            <Binding Path="ReadsCount" />
+                            <Binding Path="WritesCount" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
             </StatusBarItem>
             <Separator Grid.Column="3" />
             <StatusBarItem Grid.Column="4" />
             <Separator Grid.Column="5" />
-            <!-- HELP -->
+            <!-- SETTINGS -->
             <StatusBarItem Grid.Column="6">
+                <Button x:Name="btnShowSettings" Width="24">
+                    <Image Source="/Resources/Icons/Settings.png" />
+                </Button>
+            </StatusBarItem>
+            <!-- HELP -->
+            <StatusBarItem Grid.Column="7">
                 <Button x:Name="btnShowHelp" Click="btnShowHelp_Click"
-                    Width="20">
+                    Width="24">
                     <Image Source="/Resources/Icons/help.png" />
                 </Button>
             </StatusBarItem>
@@ -66,8 +80,8 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <controls:ConnectionControl Grid.Row="0" DataContext="{Binding ConnectionVM}" />
-                <controls:SettingsControl Grid.Row="1" DataContext="{Binding SettingsVM}" />
+                <controls:ConnectionControl Grid.Row="0" DataContext="{Binding DeviceConnectionVM}" />
+                <controls:DeviceSettingsControl Grid.Row="1" DataContext="{Binding DeviceSettingsVM}" />
                 <controls:DeviceStatusControl Grid.Row="2" DataContext="{Binding DeviceStatusVM}" />
             </Grid>
             <controls:ChartsControl Grid.Column="1" DataContext="{Binding ChartsVM}" />
