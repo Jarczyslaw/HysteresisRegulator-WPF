@@ -5,8 +5,7 @@
              xmlns:core="clr-namespace:System;assembly=mscorlib"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
              xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             d1p1:Ignorable="d" 
-             StartupUri="/Views/MainView.xaml">
+             d1p1:Ignorable="d">
     <Application.Resources>
         
         <core:Double x:Key="WindowHeight">700</core:Double>

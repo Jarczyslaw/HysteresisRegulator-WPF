@@ -11,6 +11,8 @@ namespace ApplicationSettings
 {
     public class AppSettings
     {
+        public event Action OnReset;
+
         private Settings settings;
 
         public string Location
@@ -96,6 +98,12 @@ namespace ApplicationSettings
                 if (settings.SerialPort != value)
                     settings.SerialPort = value;
             }
+        }
+
+        public void Reset()
+        {
+            settings.Reset();
+            OnReset?.Invoke();
         }
 
         public AppSettings()

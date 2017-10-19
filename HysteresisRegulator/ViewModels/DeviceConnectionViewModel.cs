@@ -14,12 +14,13 @@ namespace HysteresisRegulator.ViewModels
     public class DeviceConnectionViewModel : ViewModelBase
     {
         private Communication communication;
-        private AppSettings settings;
+        private AppSettings appSettings;
 
         public DeviceConnectionViewModel(AppSettings settings, Communication communication)
         {
             this.communication = communication;
-            this.settings = settings;
+            this.appSettings = settings;
+            this.appSettings.OnReset += () => LoadSettings();
 
             communication.CommunicationStart += Communication_CommunicationStart;
             communication.CommunicationStop += Communication_CommunicationStop;
@@ -27,8 +28,13 @@ namespace HysteresisRegulator.ViewModels
             ConnectCommand = new RelayCommand(Connect);
             RefreshPortsCommand = new RelayCommand(RefreshPorts);
             RefreshPorts();
-            SelectedPort = settings.SerialPort;
-            SelectedInterval = settings.PoolingInterval;
+            LoadSettings();
+        }
+
+        public void LoadSettings()
+        {
+            SelectedPort = appSettings.SerialPort;
+            SelectedInterval = appSettings.PoolingInterval;
         }
 
         private void Communication_CommunicationStop()
@@ -79,7 +85,7 @@ namespace HysteresisRegulator.ViewModels
                 if (!Ports.Contains(newPort))
                     newPort = Ports.FirstOrDefault();
                 else
-                    settings.SerialPort = newPort;
+                    appSettings.SerialPort = newPort;
                 Set(() => SelectedPort, ref selectedPort, newPort);
             }
         }
@@ -92,7 +98,7 @@ namespace HysteresisRegulator.ViewModels
             {
                 Set(() => SelectedInterval, ref selectedInterval, value);
                 communication.Pooling.Interval = value;
-                settings.PoolingInterval = value;
+                appSettings.PoolingInterval = value;
             }
         }
 

@@ -15,7 +15,7 @@
       <Value Profile="(Default)">-2</Value>
     </Setting>
     <Setting Name="TimeHorizon" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">20</Value>
+      <Value Profile="(Default)">30</Value>
     </Setting>
     <Setting Name="ShowDataLabels" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -24,7 +24,7 @@
       <Value Profile="(Default)">Resolution12Bit</Value>
     </Setting>
     <Setting Name="PoolingInterval" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1000</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="SerialPort" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

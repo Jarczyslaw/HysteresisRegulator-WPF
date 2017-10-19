@@ -14,9 +14,6 @@
         Icon="/Resources/Icons/jt_icon.png"
         Title="Hysteresis Regulator"
         Closing="Window_Closing">
-    <Window.DataContext>
-        <vm:MainViewModel />
-    </Window.DataContext>
     <DockPanel>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBar.ItemsPanel>
@@ -56,14 +53,15 @@
             <Separator Grid.Column="5" />
             <!-- SETTINGS -->
             <StatusBarItem Grid.Column="6">
-                <Button x:Name="btnShowSettings" Width="24">
-                    <Image Source="/Resources/Icons/Settings.png" />
+                <Button Command="{Binding ResetSettingsCommand}"
+                        Width="28">
+                    <Image Source="/Resources/Icons/reset_settings.png" />
                 </Button>
             </StatusBarItem>
             <!-- HELP -->
             <StatusBarItem Grid.Column="7">
-                <Button x:Name="btnShowHelp" Click="btnShowHelp_Click"
-                    Width="24">
+                <Button Command="{Binding ShowHelpCommand}"
+                    Width="28">
                     <Image Source="/Resources/Icons/help.png" />
                 </Button>
             </StatusBarItem>

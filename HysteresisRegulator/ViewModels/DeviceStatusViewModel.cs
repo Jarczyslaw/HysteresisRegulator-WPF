@@ -1,7 +1,7 @@
 ﻿using DeviceCommunication;
 using DeviceCommunication.Device;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +18,17 @@ namespace HysteresisRegulator.ViewModels
         {
             this.communication = communication;
             communication.Pooling.UpdateStatus += (s) => Status = s;
-            RefreshCommand = new RelayCommand(Refresh);
+            RefreshCommand = new RelayCommand(Refresh, RefreshEnabled);
         }
 
         private void Refresh()
         {
             Status = communication.Reader.GetStatus();
+        }
+
+        private bool RefreshEnabled()
+        {
+            return communication.Connected;
         }
 
         public RelayCommand RefreshCommand { get; private set; }

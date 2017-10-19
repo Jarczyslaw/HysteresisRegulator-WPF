@@ -5,8 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HysteresisRegulator.Controls"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:conv="clr-namespace:HysteresisRegulator.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <conv:ThermometerResolutionConverter x:Key="ThermometerResolutionConverter" />
+    </UserControl.Resources>
     <GroupBox Header="Device settings" Style="{StaticResource boldGroupBox}">
         <Grid>
             <Grid.Resources>
@@ -34,32 +38,32 @@
             </Grid.RowDefinitions>
 
             <!-- SETPOINT -->
-            <CheckBox Content="Set point" IsChecked="{Binding SetSetpoint}"
+            <CheckBox Content="Set point" IsChecked="{Binding Input.SetSetpoint}"
                       Margin="{StaticResource defaultTopMargin}" />
             <xctk:DoubleUpDown Grid.Column="1"
                                Value="{Binding Setpoint}" Minimum="0" />
 
             <!-- INPUT ON -->
-            <CheckBox Grid.Row="1" IsChecked="{Binding SetInputOn}"
+            <CheckBox Grid.Row="1" IsChecked="{Binding Input.SetInputOn}"
                 Content="Input ON" Margin="{StaticResource defaultTopMargin}" />
             <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" 
                                Value="{Binding InputOn}" Minimum="0" Maximum="20" />
 
             <!-- INPUT OFF -->
-            <CheckBox Grid.Row="2" IsChecked="{Binding SetInputOff}"
+            <CheckBox Grid.Row="2" IsChecked="{Binding Input.SetInputOff}"
                 Content="Input OFF" Margin="{StaticResource defaultTopMargin}" />
             <xctk:DoubleUpDown Grid.Row="2" Grid.Column="1" 
                                Value="{Binding InputOff}" Minimum="-20" Maximum="0" />
 
             <!-- RESOLUTION -->
-            <CheckBox Grid.Row="3" IsChecked="{Binding SetResolution}"
+            <CheckBox Grid.Row="3" IsChecked="{Binding Input.SetResolution}"
                 Content="Resolution" Margin="{StaticResource defaultTopMargin}" />
-            <ComboBox Grid.Row="3" Grid.Column="1" 
+            <ComboBox x:Name="SelectedResolution" Grid.Row="3" Grid.Column="1" 
                       ItemsSource="{Binding Resolutions}" SelectedItem="{Binding SelectedResolution}"
                       Margin="{StaticResource defaultTopMargin}" />
-            <TextBlock Grid.Row="4" Grid.ColumnSpan="2" Text="{Binding ResolutionDescription}" TextAlignment="Right" />
+            <TextBlock Grid.Row="4" Grid.ColumnSpan="2" Text="{Binding ElementName=SelectedResolution, Path=SelectedItem, Converter={StaticResource ThermometerResolutionConverter}}" TextAlignment="Right" />
 
-            <Button Grid.Row="5" Grid.ColumnSpan="2" Command="{Binding SetParametersCommand}" 
+            <Button Grid.Row="5" Grid.ColumnSpan="2" Command="{Binding SendParametersCommand}" 
                     Content="Change parameters" Height="30" Margin="{StaticResource defaultTopMargin}" />
         </Grid>
     </GroupBox>

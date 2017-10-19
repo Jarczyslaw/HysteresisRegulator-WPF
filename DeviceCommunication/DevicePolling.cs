@@ -18,11 +18,22 @@ namespace DeviceCommunication
         {
             get
             {
-                return new int[] { 1000, 2000, 5000, 10000 };
+                return new int[] { 1, 2, 5, 10 };
             }
         }
 
-        public int Interval { get; set; } = 1000;
+        private int interval;
+        public int Interval
+        {
+            get { return interval; }
+            set
+            {
+                if (Intervals.Contains(value))
+                    interval = value;
+                else
+                    interval = Intervals[0];
+            }
+        }
 
         private DeviceReader reader;
 
@@ -32,6 +43,7 @@ namespace DeviceCommunication
         public DevicePolling(DeviceReader reader)
         {
             this.reader = reader;
+            Interval = Intervals[0];
         }
 
         public void Start()
@@ -44,7 +56,7 @@ namespace DeviceCommunication
                 {
                     var status = reader.GetStatus();
                     UpdateStatus?.Invoke(status);
-                    await Task.Delay(Interval, token);
+                    await Task.Delay(Interval * 1000, token);
                 }
             }, token);
         }

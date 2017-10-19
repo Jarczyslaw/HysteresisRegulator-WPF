@@ -51,7 +51,7 @@
                       ItemsSource="{Binding PoolingIntervals}" SelectedItem="{Binding SelectedInterval}"
                       Margin="{StaticResource defaultTopMargin}" />
             <TextBlock Grid.Row="2" Grid.Column="2"
-                       Text="ms" />
+                       Text="s" />
 
         </Grid>
     </GroupBox>

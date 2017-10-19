@@ -27,9 +27,8 @@ namespace HysteresisRegulator.Charts
         public ChartsConfiguration(AppSettings appSettings)
         {
             this.appSettings = appSettings;
-
-            TimeHorizon = appSettings.TimeHorizon;
-            ShowDataLabels = appSettings.ShowDataLabels;
+            this.appSettings.OnReset += () => LoadSettings();
+            LoadSettings();
 
             DateSampleMapper = new CartesianMapper<DateSample>()
                 .X(d => (double)d.TimeStamp.Ticks / ticksPerSecond)
@@ -42,6 +41,12 @@ namespace HysteresisRegulator.Charts
                 return p.Y.ToString("0.0");
             };
             TimeAxisFormatter = d => new DateTime((long)d * ticksPerSecond).ToString("HH:mm:ss");
+        }
+
+        public void LoadSettings()
+        {
+            TimeHorizon = appSettings.TimeHorizon;
+            ShowDataLabels = appSettings.ShowDataLabels;
         }
 
         private int timeHorizon = 60;

@@ -73,7 +73,7 @@ namespace ApplicationSettings {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
         public int TimeHorizon {
             get {
                 return ((int)(this["TimeHorizon"]));
@@ -109,7 +109,7 @@ namespace ApplicationSettings {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int PoolingInterval {
             get {
                 return ((int)(this["PoolingInterval"]));

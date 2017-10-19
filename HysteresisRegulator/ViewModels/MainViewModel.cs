@@ -1,7 +1,8 @@
 ﻿using ApplicationSettings;
 using DeviceCommunication;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
+using HysteresisRegulator.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,18 +22,22 @@ namespace HysteresisRegulator.ViewModels
 
         private Communication communication;
         private AppSettings appSettings;
+        private IWindowService windowService;
+        private IDialogService dialogService;
 
-        public MainViewModel()
+        public MainViewModel(IWindowService windowService, IDialogService dialogService)
         {
             appSettings = new AppSettings();
             communication = new Communication();
+            this.windowService = windowService;
+            this.dialogService = dialogService;
 
             communication.CommunicationStart += Communication_CommunicationStart;
             communication.CommunicationStop += Communication_CommunicationStop;
             Communication_CommunicationStop();
 
-            communication.Writer.WritesChanged += (i) => WritesCount = i;
-            communication.Reader.ReadsChanged += (i) => ReadsCount = i;
+            communication.Writer.OnWrite += (i) => WritesCount = i;
+            communication.Reader.OnRead += (i) => ReadsCount = i;
 
             ChartsVM = new ChartsViewModel(appSettings, communication);
             DeviceConnectionVM = new DeviceConnectionViewModel(appSettings, communication);
@@ -40,6 +45,22 @@ namespace HysteresisRegulator.ViewModels
             DeviceSettingsVM = new DeviceSettingsViewModel(appSettings, communication);
 
             CloseCommand = new RelayCommand(Close);
+            ShowHelpCommand = new RelayCommand(ShowHelp);
+            ResetSettingsCommand = new RelayCommand(SettingsReset);
+        }
+
+        private void SettingsReset()
+        {
+            if (dialogService.ShowResetSettingsDialog())
+            {
+                appSettings.Reset();
+                Debug.WriteLine("Settings reset");
+            }
+        }
+
+        private void ShowHelp()
+        {
+            windowService.ShowHelpView();
         }
 
         private void Communication_CommunicationStop()
@@ -79,5 +100,7 @@ namespace HysteresisRegulator.ViewModels
         }
 
         public RelayCommand CloseCommand { get; private set; }
+        public RelayCommand ShowHelpCommand { get; private set; }
+        public RelayCommand ResetSettingsCommand { get; private set; }
     }
 }

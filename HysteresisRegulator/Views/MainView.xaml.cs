@@ -25,12 +25,6 @@ namespace HysteresisRegulator.Views
             InitializeComponent();
         }
 
-        private void btnShowHelp_Click(object sender, RoutedEventArgs e)
-        {
-            var help = new HelpView();
-            help.Show();
-        }
-
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             var mvm = DataContext as MainViewModel;

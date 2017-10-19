@@ -130,7 +130,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Charts\ChartsConfiguration.cs" />
-    <Compile Include="Charts\ControlCharts.cs" />
+    <Compile Include="Charts\ChartsData.cs" />
     <Compile Include="Charts\DateSample.cs" />
     <Compile Include="Controls\ChartsControl.xaml.cs">
       <DependentUpon>ChartsControl.xaml</DependentUpon>
@@ -148,8 +148,12 @@
     <Compile Include="Converters\BoolToStringConverter.cs" />
     <Compile Include="Converters\BoolToValueConverter.cs" />
     <Compile Include="Converters\MillisToTimeSpanConverter.cs" />
-    <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="Converters\ThermometerResolutionConverter.cs" />
+    <Compile Include="Services\DialogService.cs" />
+    <Compile Include="Services\IDialogService.cs" />
+    <Compile Include="Services\IWindowService.cs" />
+    <Compile Include="Services\WindowCreator.cs" />
+    <Compile Include="Services\WindowService.cs" />
     <Compile Include="ViewModels\ChartsViewModel.cs" />
     <Compile Include="ViewModels\DeviceConnectionViewModel.cs" />
     <Compile Include="ViewModels\DeviceStatusViewModel.cs" />
@@ -160,9 +164,6 @@
     </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SettingsView.xaml.cs">
-      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -230,10 +231,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\jt_icon.ico" />
@@ -254,7 +251,7 @@
     <Resource Include="jt_icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Icons\settings.png" />
+    <Resource Include="Resources\Icons\reset_settings.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

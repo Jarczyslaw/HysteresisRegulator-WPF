@@ -22,69 +22,38 @@ namespace HysteresisRegulator.ViewModels
         public DeviceSettingsViewModel(AppSettings appSettings, Communication communication)
         {
             this.appSettings = appSettings;
+            this.appSettings.OnReset += () => LoadSettings();
             this.communication = communication;
 
-            SetParametersCommand = new RelayCommand(SetParameters);
+            SendParametersCommand = new RelayCommand(SendParameters, SendParametersEnabled);
             Resolutions = (ThermometerResolution[])Enum.GetValues(typeof(ThermometerResolution));
 
-            input = new DeviceInput();
+            communication.CommunicationStart += () => SendParametersCommand.RaiseCanExecuteChanged();
+
+            Input = new DeviceInput();
+            LoadSettings();
+        }
+
+        public void LoadSettings()
+        {
             SelectedResolution = appSettings.ThermometerResolution;
             Setpoint = appSettings.Setpoint;
             InputOff = appSettings.InputOff;
             InputOn = appSettings.InputOn;
         }
 
-        private void SetParameters()
+        private void SendParameters()
         {
-            if (input.SetValuesPending())
-                communication.Writer.SetParametersAsync(input);
+            if (Input.ReadyToSend())
+                communication.Writer.SendParametersAsync(Input);
         }
 
-        private DeviceInput input;
-
-        public bool setSetpoint = false;
-        public bool SetSetpoint
+        private bool SendParametersEnabled()
         {
-            get { return setSetpoint; }
-            set
-            {
-                Set(() => SetSetpoint, ref setSetpoint, value);
-                input.SetSetpoint = value;
-            }
+            return communication.Connected;
         }
 
-        public bool setInputOn = false;
-        public bool SetInputOn
-        {
-            get { return setInputOn; }
-            set
-            {
-                Set(() => SetInputOn, ref setInputOn, value);
-                input.SetInputOn = value;
-            }
-        }
-
-        public bool setInputOff = false;
-        public bool SetInputOff
-        {
-            get { return setInputOff; }
-            set
-            {
-                Set(() => SetInputOff, ref setInputOff, value);
-                input.SetInputOff = value;
-            }
-        }
-
-        public bool setResolution = false;
-        public bool SetResolution
-        {
-            get { return setResolution; }
-            set
-            {
-                Set(() => SetResolution, ref setResolution, value);
-                input.SetResolution = value;
-            }
-        }
+        public DeviceInput Input { get; private set; }
 
         public double setpoint;
         public double Setpoint
@@ -93,7 +62,7 @@ namespace HysteresisRegulator.ViewModels
             set
             {
                 Set(() => Setpoint, ref setpoint, value);
-                input.SetpointValue = (float)value;
+                Input.SetpointValue = (float)value;
                 appSettings.Setpoint = value;
             }
         }
@@ -105,7 +74,7 @@ namespace HysteresisRegulator.ViewModels
             set
             {
                 Set(() => InputOn, ref inputOn, value);
-                input.InputOnValue = (float)value;
+                Input.InputOnValue = (float)value;
                 appSettings.InputOn = value;
             }
         }
@@ -117,7 +86,7 @@ namespace HysteresisRegulator.ViewModels
             set
             {
                 Set(() => InputOff, ref inputOff, value);
-                input.InputOffValue = (float)value;
+                Input.InputOffValue = (float)value;
                 appSettings.InputOff = value;
             }
         }
@@ -129,23 +98,13 @@ namespace HysteresisRegulator.ViewModels
             set
             {
                 Set(() => SelectedResolution, ref selectedResolution, value);
-                input.ResolutionValue = value;
+                Input.ResolutionValue = value;
                 appSettings.ThermometerResolution = value;
-
-                var resDesc = value.GetAttribute<ThermometerResolutionAttibute>();
-                ResolutionDescription = string.Format("Accuracy: {0}°C, Interval: {1}ms", resDesc.Accuracy, resDesc.Latency);
             }
-        }
-
-        public string resolutionDescription;
-        public string ResolutionDescription
-        {
-            get { return resolutionDescription; }
-            set { Set(() => ResolutionDescription, ref resolutionDescription, value); }
         }
 
         public ThermometerResolution[] Resolutions { get; private set; }
 
-        public RelayCommand SetParametersCommand { get; private set; }
+        public RelayCommand SendParametersCommand { get; private set; }
     }
 }

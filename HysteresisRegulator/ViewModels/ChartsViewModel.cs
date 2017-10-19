@@ -13,7 +13,7 @@ namespace HysteresisRegulator.ViewModels
 {
     public class ChartsViewModel : ViewModelBase
     {
-        public ControlCharts Charts { get; private set; }
+        public ChartsData Data { get; private set; }
         public ChartsConfiguration Configuration { get; private set; }
 
         private AppSettings appSettings;
@@ -22,11 +22,11 @@ namespace HysteresisRegulator.ViewModels
         public ChartsViewModel(AppSettings appSettings, Communication communication)
         {
             Configuration = new ChartsConfiguration(appSettings);
-            Charts = new ControlCharts(Configuration);
+            Data = new ChartsData(Configuration);
             this.appSettings = appSettings;
             this.communication = communication;
 
-            communication.Pooling.UpdateStatus += (s) => Charts.Push(s.Temperature, s.Setpoint, s.RelayState);
+            communication.Pooling.UpdateStatus += (s) => Data.Push(s.Temperature, s.Setpoint, s.RelayState);
         }
     }
 }

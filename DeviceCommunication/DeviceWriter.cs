@@ -14,7 +14,7 @@ namespace DeviceCommunication
     public class DeviceWriter
     {
         public delegate void WritesChangedHandler(int writesCount);
-        public event WritesChangedHandler WritesChanged;
+        public event WritesChangedHandler OnWrite;
 
         public int WritesCount { get; private set; } = 0;
 
@@ -27,7 +27,7 @@ namespace DeviceCommunication
             this.slaveAddress = slaveAddress;
         }
 
-        public void SetParameters(DeviceInput input)
+        public void SendParameters(DeviceInput input)
         {
             var coils = GetCoils(input);
             var regs = GetRegisters(input);
@@ -36,15 +36,15 @@ namespace DeviceCommunication
             RaiseWritesChangedEvent();
         }
 
-        public async void SetParametersAsync(DeviceInput input)
+        public async void SendParametersAsync(DeviceInput input)
         {
-            await Task.Run(() => SetParameters(input));
+            await Task.Run(() => SendParameters(input));
         }
 
         private void RaiseWritesChangedEvent()
         {
             WritesCount++;
-            WritesChanged?.Invoke(WritesCount);
+            OnWrite?.Invoke(WritesCount);
         }
 
         private bool[] GetCoils(DeviceInput input)

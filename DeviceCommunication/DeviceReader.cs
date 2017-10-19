@@ -14,7 +14,7 @@ namespace DeviceCommunication
     public class DeviceReader
     {
         public delegate void ReadsChangedHandler(int readsCount);
-        public event ReadsChangedHandler ReadsChanged;
+        public event ReadsChangedHandler OnRead;
 
         public int ReadsCount { get; private set; } = 0;
 
@@ -38,7 +38,7 @@ namespace DeviceCommunication
         private void RaiseReadsChangedEvent()
         {
             ReadsCount++;
-            ReadsChanged?.Invoke(ReadsCount);
+            OnRead?.Invoke(ReadsCount);
         }
 
         private DeviceStatus ParseStatus(bool[] inputContacts, ushort[] inputRegisters)

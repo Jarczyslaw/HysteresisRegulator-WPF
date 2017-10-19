@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HysteresisRegulator.Charts
 {
-    public class ControlCharts
+    public class ChartsData
     {
         public ChartValues<DateSample> OutputValues { get; set; }
         public ChartValues<DateSample> SetpointValues { get; set; }
@@ -17,7 +17,7 @@ namespace HysteresisRegulator.Charts
 
         private ChartsConfiguration configuration;
 
-        public ControlCharts(ChartsConfiguration configuration)
+        public ChartsData(ChartsConfiguration configuration)
         {
             OutputValues = new ChartValues<DateSample>();
             SetpointValues = new ChartValues<DateSample>();
