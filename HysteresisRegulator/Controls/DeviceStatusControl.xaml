@@ -97,7 +97,7 @@
             
             <!-- REFRESH -->
             <Button Grid.Row="8" Grid.ColumnSpan="2"  Command="{Binding RefreshCommand}"
-                Margin="0 5 0 0" Content="Refresh" />
+                Margin="0 5 0 0" Content="Refresh" Height="30"  />
         </Grid>
     </GroupBox>
 </UserControl>

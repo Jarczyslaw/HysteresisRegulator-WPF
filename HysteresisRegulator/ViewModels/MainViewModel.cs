@@ -40,9 +40,9 @@ namespace HysteresisRegulator.ViewModels
             communication.Reader.OnRead += (i) => ReadsCount = i;
 
             ChartsVM = new ChartsViewModel(appSettings, communication);
-            DeviceConnectionVM = new DeviceConnectionViewModel(appSettings, communication);
-            DeviceStatusVM = new DeviceStatusViewModel(communication);
-            DeviceSettingsVM = new DeviceSettingsViewModel(appSettings, communication);
+            DeviceConnectionVM = new DeviceConnectionViewModel(appSettings, communication, dialogService);
+            DeviceStatusVM = new DeviceStatusViewModel(communication, dialogService);
+            DeviceSettingsVM = new DeviceSettingsViewModel(appSettings, communication, dialogService);
 
             CloseCommand = new RelayCommand(Close);
             ShowHelpCommand = new RelayCommand(ShowHelp);
@@ -75,6 +75,7 @@ namespace HysteresisRegulator.ViewModels
 
         private void Close()
         {
+            communication.Stop();
             App.Current.Shutdown();
         }
 

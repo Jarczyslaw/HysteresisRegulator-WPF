@@ -2,6 +2,7 @@
 using DeviceCommunication;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using HysteresisRegulator.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,12 +16,14 @@ namespace HysteresisRegulator.ViewModels
     {
         private Communication communication;
         private AppSettings appSettings;
+        private IDialogService dialogService;
 
-        public DeviceConnectionViewModel(AppSettings settings, Communication communication)
+        public DeviceConnectionViewModel(AppSettings appSettings, Communication communication, IDialogService dialogService)
         {
             this.communication = communication;
-            this.appSettings = settings;
+            this.appSettings = appSettings;
             this.appSettings.OnReset += () => LoadSettings();
+            this.dialogService = dialogService;
 
             communication.CommunicationStart += Communication_CommunicationStart;
             communication.CommunicationStop += Communication_CommunicationStop;
@@ -54,11 +57,17 @@ namespace HysteresisRegulator.ViewModels
 
         private void Connect()
         {
-            Debug.WriteLine("Connect to: " + SelectedPort);
-            if (!communication.Connected)
-                communication.Start(SelectedPort);
-            else
-                communication.Stop();
+            try
+            {
+                if (!communication.Connected)
+                    communication.Start(SelectedPort);
+                else
+                    communication.Stop();
+            }
+            catch(Exception ex)
+            {
+                dialogService.ShowErrorDialog(ex.Message);
+            }
         }
 
         private bool connected;

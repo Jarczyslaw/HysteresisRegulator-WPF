@@ -13,7 +13,6 @@ namespace DeviceCommunication
         public delegate void UpdateStatusHandler(DeviceStatus status);
         public event UpdateStatusHandler UpdateStatus;
 
-
         public int[] Intervals
         {
             get
@@ -54,16 +53,21 @@ namespace DeviceCommunication
             {
                 while(!token.IsCancellationRequested)
                 {
-                    var status = reader.GetStatus();
-                    UpdateStatus?.Invoke(status);
-                    await Task.Delay(Interval * 1000, token);
+                    try
+                    {
+                        var status = reader.GetStatus();
+                        UpdateStatus?.Invoke(status);
+                    }
+                    catch { }
+                    await Task.Delay(Interval * 1000, token).ContinueWith(t => { });
                 }
             }, token);
         }
 
         public void Stop()
         {
-            
+            tokenSource?.Cancel();
+            poolingTask?.Wait();
         }
     }
 }

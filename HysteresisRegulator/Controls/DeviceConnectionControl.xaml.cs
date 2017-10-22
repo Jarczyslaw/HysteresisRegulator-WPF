@@ -18,9 +18,9 @@ namespace HysteresisRegulator.Controls
     /// <summary>
     /// Interaction logic for ConnectionControl.xaml
     /// </summary>
-    public partial class ConnectionControl : UserControl
+    public partial class DeviceConnectionControl : UserControl
     {
-        public ConnectionControl()
+        public DeviceConnectionControl()
         {
             InitializeComponent();
         }

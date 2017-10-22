@@ -4,6 +4,7 @@ using DeviceCommunication.Device;
 using DeviceCommunication.Device.Thermometer;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using HysteresisRegulator.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,12 +19,14 @@ namespace HysteresisRegulator.ViewModels
     {
         private AppSettings appSettings;
         private Communication communication;
+        private IDialogService dialogService;
 
-        public DeviceSettingsViewModel(AppSettings appSettings, Communication communication)
+        public DeviceSettingsViewModel(AppSettings appSettings, Communication communication, IDialogService dialogService)
         {
             this.appSettings = appSettings;
             this.appSettings.OnReset += () => LoadSettings();
             this.communication = communication;
+            this.dialogService = dialogService;
 
             SendParametersCommand = new RelayCommand(SendParameters, SendParametersEnabled);
             Resolutions = (ThermometerResolution[])Enum.GetValues(typeof(ThermometerResolution));
@@ -42,10 +45,17 @@ namespace HysteresisRegulator.ViewModels
             InputOn = appSettings.InputOn;
         }
 
-        private void SendParameters()
+        private async void SendParameters()
         {
-            if (Input.ReadyToSend())
-                communication.Writer.SendParametersAsync(Input);
+            try
+            {
+                if (Input.ReadyToSend())
+                    await communication.Writer.SendParametersAsync(Input);
+            }
+            catch(Exception ex)
+            {
+                dialogService.ShowErrorDialog(ex.Message);
+            }
         }
 
         private bool SendParametersEnabled()

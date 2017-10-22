@@ -10,5 +10,6 @@ namespace HysteresisRegulator.Services
     {
         bool ShowResetSettingsDialog();
         bool ShowOkCancelDialog(string text);
+        void ShowErrorDialog(string text);
     }
 }

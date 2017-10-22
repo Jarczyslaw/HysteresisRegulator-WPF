@@ -27,24 +27,26 @@ namespace DeviceCommunication
             this.slaveAddress = slaveAddress;
         }
 
+        public void Start()
+        {
+            WritesCount = 0;
+            OnWrite?.Invoke(WritesCount);
+        }
+
         public void SendParameters(DeviceInput input)
         {
             var coils = GetCoils(input);
             var regs = GetRegisters(input);
             master.WriteMultipleRegisters(slaveAddress, 0, regs);
             master.WriteMultipleCoils(slaveAddress, 0, coils);
-            RaiseWritesChangedEvent();
-        }
 
-        public async void SendParametersAsync(DeviceInput input)
-        {
-            await Task.Run(() => SendParameters(input));
-        }
-
-        private void RaiseWritesChangedEvent()
-        {
             WritesCount++;
             OnWrite?.Invoke(WritesCount);
+        }
+
+        public Task SendParametersAsync(DeviceInput input)
+        {
+            return Task.Run(() => SendParameters(input));
         }
 
         private bool[] GetCoils(DeviceInput input)

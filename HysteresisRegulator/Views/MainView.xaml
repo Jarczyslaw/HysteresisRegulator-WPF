@@ -78,7 +78,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <controls:ConnectionControl Grid.Row="0" DataContext="{Binding DeviceConnectionVM}" />
+                <controls:DeviceConnectionControl Grid.Row="0" DataContext="{Binding DeviceConnectionVM}" />
                 <controls:DeviceSettingsControl Grid.Row="1" DataContext="{Binding DeviceSettingsVM}" />
                 <controls:DeviceStatusControl Grid.Row="2" DataContext="{Binding DeviceStatusVM}" />
             </Grid>

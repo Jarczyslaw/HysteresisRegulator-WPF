@@ -19,5 +19,10 @@ namespace HysteresisRegulator.Services
             var result = MessageBox.Show(text, "Question", MessageBoxButton.OKCancel, MessageBoxImage.Question, MessageBoxResult.Cancel);
             return result == MessageBoxResult.OK;
         }
+
+        public void ShowErrorDialog(string text)
+        {
+            MessageBox.Show(text, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 }

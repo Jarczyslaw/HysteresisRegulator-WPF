@@ -135,8 +135,8 @@
     <Compile Include="Controls\ChartsControl.xaml.cs">
       <DependentUpon>ChartsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ConnectionControl.xaml.cs">
-      <DependentUpon>ConnectionControl.xaml</DependentUpon>
+    <Compile Include="Controls\DeviceConnectionControl.xaml.cs">
+      <DependentUpon>DeviceConnectionControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DeviceStatusControl.xaml.cs">
       <DependentUpon>DeviceStatusControl.xaml</DependentUpon>
@@ -211,7 +211,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ConnectionControl.xaml">
+    <Page Include="Controls\DeviceConnectionControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

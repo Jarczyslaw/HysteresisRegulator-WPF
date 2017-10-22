@@ -10,10 +10,8 @@ namespace DeviceCommunication
 {
     public class Communication
     {
-        public delegate void CommunicationStartHandler();
-        public event CommunicationStartHandler CommunicationStart;
-        public delegate void CommunicationStopHandler();
-        public event CommunicationStopHandler CommunicationStop;
+        public event Action CommunicationStart;
+        public event Action CommunicationStop;
 
         public DeviceReader Reader { get; private set; }
         public DeviceWriter Writer { get; private set; }
@@ -26,8 +24,7 @@ namespace DeviceCommunication
             {
                 if (port == null)
                     return false;
-                else
-                    return port.IsOpen;
+                return port.IsOpen;
             }
         }
 
@@ -72,12 +69,19 @@ namespace DeviceCommunication
             port.PortName = portName;
             port.Open();
             CommunicationStart?.Invoke();
+            Writer.Start();
+            Reader.Start();
             Pooling.Start();
         }
 
         public void Stop()
         {
-
+            Pooling.Stop();
+            if (Connected)
+            {
+                port.Close();
+                CommunicationStop?.Invoke();
+            }    
         }
 
         public void SetTimeout(int timeout)

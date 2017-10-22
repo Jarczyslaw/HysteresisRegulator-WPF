@@ -27,18 +27,25 @@ namespace DeviceCommunication
             this.slaveAddress = slaveAddress;
         }
 
+        public void Start()
+        {
+            ReadsCount = 0;
+            OnRead?.Invoke(ReadsCount);
+        }
+
         public DeviceStatus GetStatus()
         {
             bool[] contacts = master.ReadInputs(slaveAddress, 0, 1);
             ushort[] registers = master.ReadInputRegisters(slaveAddress, 0, 13);
-            RaiseReadsChangedEvent();
+
+            ReadsCount++;
+            OnRead?.Invoke(ReadsCount);
             return ParseStatus(contacts, registers);
         }
 
-        private void RaiseReadsChangedEvent()
+        public Task<DeviceStatus> GetStatusAsync()
         {
-            ReadsCount++;
-            OnRead?.Invoke(ReadsCount);
+            return Task.Run(() => GetStatus());
         }
 
         private DeviceStatus ParseStatus(bool[] inputContacts, ushort[] inputRegisters)
